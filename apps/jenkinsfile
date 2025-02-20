@@ -1,0 +1,53 @@
+pipeline{
+    agent any
+    tools {
+        maven 'maven'
+    }
+    stages{
+        stage('Clone'){
+            steps{
+                git branch: 'main', credentialsId: 'ganesh95dos', url: 'https://github.com/devopsdecode/nov-2024.git'
+
+            }
+            
+        }
+        stage('Build'){
+            steps{
+                dir('apps'){
+                script{
+                sh 'pwd'
+                sh 'ls'
+                sh 'mvn --version'
+                sh 'mvn compile' 
+                }
+                }     
+            }
+            
+            
+        }   
+        stage('Test'){
+            steps{
+                dir('apps'){
+                script{
+                sh 'mvn test' 
+                }
+                }     
+            }
+            
+            
+        } 
+        stage('Package'){
+            steps{
+                dir('apps'){
+                script{
+                sh 'mvn package' 
+                }
+                }     
+            }
+            
+            
+        }                        
+    }
+}
+
+
