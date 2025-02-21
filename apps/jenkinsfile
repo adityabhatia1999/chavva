@@ -1,4 +1,4 @@
-pipeline{
+peline{
     agent any
     tools {
         maven 'maven'
@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage('Clone'){
             steps{
-                git branch: 'main', credentialsId: 'ganesh95dos', url: 'https://github.com/devopsdecode/nov-2024.git'
+                git branch: 'main', credentialsId: 'jenkins-nexus-git', url: 'https://github.com:adityabhatia1999/jenkins-nexus-repo.git'
 
             }
             
@@ -51,3 +51,55 @@ pipeline{
 }
 
 
+===========
+
+
+
+pipeline {
+    agent any
+
+    tools {
+        maven 'maven' // Ensure 'maven' is properly configured in Jenkins
+    }
+
+    stages {
+        stage('Clone') {
+            steps {
+                git branch: 'main', credentialsId: 'my-jenkins-pat', url: 'https://github.com/adityabhatia1999/new-jenkins.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    dir('apps') {
+                        sh 'pwd'
+                        sh 'ls -lah'
+                        sh 'mvn --version'
+                        sh 'mvn compile'
+                    }
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    dir('apps') {
+                        sh 'mvn test'
+                    }
+                }
+            }
+        }
+
+        stage('Package') {
+            steps {
+                script {
+                    dir('apps') {
+                        sh 'mvn package'
+                    }
+                }
+            }
+        }
+    }
+}
