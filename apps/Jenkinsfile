@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage('Clone'){
             steps{
-                git branch: 'main', credentialsId: 'jenkins-pat', url: 'https://github.com/adityabhatia1999/chavva.git'
+                git branch: 'jenkinsfile', credentialsId: 'jenkins-pat', url: 'https://github.com/adityabhatia1999/chavva.git'
 
             }
             
