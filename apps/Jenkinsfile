@@ -6,9 +6,9 @@ pipeline {
     environment {
         NEXUS_URL = 'http://localhost:8081'
         NEXUS_REPOSITORY = 'maven-releases'
-        ARTIFACT_GROUP = 'com/example/laundry'
+        ARTIFACT_GROUP = 'com.example.laundry'
         ARTIFACT_ID = 'LaundryApp'
-        ARTIFACT_VERSION = '1.1.2'
+        ARTIFACT_VERSION = '1.1.1'
         ARTIFACT_FILE = "target/LaundryApp-1.0-SNAPSHOT.jar"
         NEXUS_CREDENTIALS = 'jenkins-pat'  // Ensure this is set in Jenkins credentials
     }
@@ -60,7 +60,7 @@ pipeline {
                             sh """
                             mvn deploy:deploy-file \
                                 -Durl=${NEXUS_URL}/repository/${NEXUS_REPOSITORY}/ \
-                                -DrepositoryId=nexus \
+                                -DrepositoryId=jenkins-pat \
                                 -Dfile=${ARTIFACT_FILE} \
                                 -DgroupId=${ARTIFACT_GROUP} \
                                 -DartifactId=${ARTIFACT_ID} \
