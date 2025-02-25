@@ -4,7 +4,7 @@ pipeline {
         maven 'maven'
     }
     environment {
-        NEXUS_URL = 'localhost:8081'
+        NEXUS_URL = 'http://localhost:8081'
         NEXUS_REPOSITORY = 'maven-releases'
         ARTIFACT_GROUP = 'com.example.laundry'
         ARTIFACT_ID = 'LaundryApp'
