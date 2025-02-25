@@ -6,10 +6,10 @@ pipeline {
     environment {
         NEXUS_URL = 'http://localhost:8081'
         NEXUS_REPOSITORY = 'maven-releases'
-        ARTIFACT_GROUP = 'com.example.laundry'
+        ARTIFACT_GROUP = 'com/example/laundry'
         ARTIFACT_ID = 'LaundryApp'
         ARTIFACT_VERSION = '1.1.2'
-        ARTIFACT_FILE = '/apps/target/LaundryApp-1.0-SNAPSHOT.jar'
+        ARTIFACT_FILE = "apps/target/${ARTIFACT_ID}-${ARTIFACT_VERSION}.jar"
         NEXUS_CREDENTIALS = 'jenkins-pat'  // Ensure this is set in Jenkins credentials
     }
     stages {
