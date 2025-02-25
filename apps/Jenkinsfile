@@ -4,13 +4,13 @@ pipeline {
         maven 'maven'
     }
     environment {
-        NEXUS_URL = 'http://localhost:8081'  // Change if Nexus is on a different host
+        NEXUS_URL = 'http://nexus:8081'
         NEXUS_REPOSITORY = 'maven-releases'
         ARTIFACT_GROUP = 'com.example.laundry'
         ARTIFACT_ID = 'LaundryApp'
         ARTIFACT_VERSION = '1.1.1'
         ARTIFACT_FILE = "target/LaundryApp-1.0-SNAPSHOT.jar"
-        NEXUS_CREDENTIALS = 'jenkins-pat'  // Ensure credentials exist in Jenkins
+        NEXUS_CREDENTIALS = 'jenkins-pat'  // Ensure this is set in Jenkins credentials
     }
     stages {
         stage('Clone Repository') {
@@ -66,7 +66,6 @@ pipeline {
                                 -DartifactId=${ARTIFACT_ID} \
                                 -Dversion=${ARTIFACT_VERSION} \
                                 -Dpackaging=jar \
-                                -DgeneratePom=true \
                                 --settings ./settings.xml
                             """
                         }
@@ -75,17 +74,15 @@ pipeline {
             }
         }
 
-        stage('CD Deploy to Server') {
+        stage('CD Deploy to server' ) {
             steps {
                 script {
                     sh """
                     echo "Downloading artifact from Nexus..."
-                    curl -u admin:admin -o ${ARTIFACT_ID}-${ARTIFACT_VERSION}.jar \
-                    ${NEXUS_URL}/repository/${NEXUS_REPOSITORY}/${ARTIFACT_GROUP.replace('.', '/')}/${ARTIFACT_ID}/${ARTIFACT_VERSION}/${ARTIFACT_ID}-${ARTIFACT_VERSION}.jar
+                    curl -u admin:admin -O ${NEXUS_URL}/repository/${NEXUS_REPOSITORY}/${ARTIFACT_GROUP}/${ARTIFACT_ID}/${ARTIFACT_VERSION}/${ARTIFACT_ID}-${ARTIFACT_VERSION}.jar
                     """
                 }
             }
         }
     }
 }
-
